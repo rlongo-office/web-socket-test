@@ -3,7 +3,7 @@ package com.example.websockettest.config;
 import java.util.ArrayList;
 import java.util.Map;
 
-import com.example.websockettest.models.User;
+import com.example.websockettest.model.User;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;

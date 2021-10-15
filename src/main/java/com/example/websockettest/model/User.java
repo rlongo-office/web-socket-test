@@ -1,4 +1,4 @@
-package com.example.websockettest.models;
+package com.example.websockettest.model;
 
 import java.security.Principal;
 
