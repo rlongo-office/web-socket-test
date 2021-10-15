@@ -1,0 +1,81 @@
+<html>
+<head>
+    <title>Hello WebSocket</title>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script type="text/javascript">
+
+        var stompClient = null;
+
+        function connect(username) {
+            console.log(username);
+            var socket = new SockJS('/game-app');
+            stompClient = Stomp.over(socket);
+            stompClient.connect({ username: username, }, function() {
+                console.log('Web Socket is connected');
+                stompClient.subscribe('/topic/chat', function(message) {
+                    $("#partyMessage").text(message.body);
+                });
+                stompClient.subscribe('/user/queue/message', function(message) {
+                    console.log('/user/queue/message', {message})
+                    $("#message").text(message.body);
+                });
+                document.getElementById("form-div").style.visibility = "visible";
+                document.getElementById("partyform-div").style.visibility = "visible";
+            });
+        }
+
+        $(function() {
+            $("form").on('submit', function(e) {
+                e.preventDefault();
+            });
+            $("#connect").click(function() {
+                connect($("#username").val());
+            });
+            $("#send").click(function() {
+                const name = $("#name").val();
+                stompClient.send("/app/messages", {}, name);
+            });
+            $("#partysend").click(function() {
+                const partytext = $("#partytext").val();
+                stompClient.send("/app/chat", {}, partytext);
+            });
+        });
+    </script>
+</head>
+<body>
+<div id="main-content">
+    <div>
+        <div>
+            <label>What is your username?
+                <input type="text" id="username" placeholder="Your username here...">
+            </label>
+            <button id="connect" type="submit">Connect</button>
+        </div>
+    </div>
+    <div id="form-div" style="visibility: hidden">
+        <form>
+            <div>
+                <label>User will received message
+                    <input type="text" id="name" placeholder="User will receive the message...">
+                </label>
+                <button id="send" type="submit">Send</button>
+            </div>
+        </form>
+        <label>Message from someone: </label><span id="message"></span>
+    </div>
+    <div id="partyform-div" style="visibility: hidden">
+        <form>
+            <div>
+                <label>User will received message
+                    <input type="text" id="partytext" placeholder="Chat Room will receive the message...">
+                </label>
+                <button id="partysend" type="submit">Send</button>
+            </div>
+        </form>
+        <label>Message from someone: </label><span id="partyMessage"></span>
+    </div>
+</div>
+</body>
+</html>
