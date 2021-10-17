@@ -1,30 +1,28 @@
 package com.example.websockettest.controllers;
 
-import com.example.websockettest.messages.ReceiveChatMessage;
-import com.example.websockettest.messages.SendChatMessage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import com.example.websockettest.model.StompMessage;
 
-import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
+
 
 @Controller
 @CrossOrigin(origins = "http://localhost:7000")
 public class ChatController {
     // allows us to programmatically send a message
     private final SimpMessagingTemplate simpMessagingTemplate;
+
+    ObjectMapper objectMapper = new ObjectMapper();
 
     @Autowired
     public ChatController(SimpMessagingTemplate simpMessagingTemplate) {
@@ -46,10 +44,17 @@ public class ChatController {
     @MessageMapping("/chat")
     public void processMessageToChat(
             @Payload String message
-    ) throws Exception {
+    ) { try {
+        System.out.println(message);
+        StompMessage stompMsg = objectMapper.readValue(message, StompMessage.class);
         String timeStamp = new SimpleDateFormat("MM.dd.HH.mm.ss").format(new Date());
-        String sendMsg = "[" + timeStamp + "]-" + message;
-        simpMessagingTemplate.convertAndSend("/topic/chat", sendMsg);
+        String chat = "[" + timeStamp + "]-" + stompMsg.getBody();
+        stompMsg.setBody(chat);
+        String returnMessage = objectMapper.writeValueAsString(stompMsg);
+        simpMessagingTemplate.convertAndSend("/topic/chat", returnMessage);
+    } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     //instead of using SimpMessagingTemplate, we can use @SendTo or @SendToUser to determine destination

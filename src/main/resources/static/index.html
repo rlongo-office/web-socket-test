@@ -12,7 +12,7 @@
             console.log(username);
             var socket = new SockJS('/game-app');
             stompClient = Stomp.over(socket);
-            stompClient.connect({ username: username, }, function() {
+            stompClient.connect({ username: username, }, function() {1
                 console.log('Web Socket is connected');
                 stompClient.subscribe('/topic/chat', function(message) {
                     $("#partyMessage").text(message.body);
