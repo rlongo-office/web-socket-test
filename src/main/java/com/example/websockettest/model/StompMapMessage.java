@@ -5,5 +5,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Scope(value="prototype")
-public class StompMapMessage extends StompMessage {
+public class StompMapMessage extends GameMessage {
 }

@@ -1,5 +1,6 @@
 package com.example.websockettest.controllers;
 
+import com.example.websockettest.Service.MessageFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageExceptionHandler;
@@ -10,7 +11,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import com.example.websockettest.model.StompMessage;
+import com.example.websockettest.model.GameMessage;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,35 +24,26 @@ public class ChatController {
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     ObjectMapper objectMapper = new ObjectMapper();
-
+    MessageFactory msgFactory = new MessageFactory();
     @Autowired
     public ChatController(SimpMessagingTemplate simpMessagingTemplate) {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
-    /*
-        From Spring tutorial - It's import to remark that, @SendToUser indicates that the return value of a
-        message-handling method should be
-        sent as a Message to the specified destination(s) prepended with “/user/{username}“ ???
-     */
-    /*
-    @MessageMapping("/chat")
-    @SendTo("/topic/chat")
-    public void broadcastNews(@Payload String message) {
-        this.simpMessagingTemplate.convertAndSend("/topic/party", message);
-    }
-    */
     @MessageMapping("/chat")
     public void processMessageToChat(
             @Payload String message
     ) { try {
         System.out.println(message);
-        StompMessage stompMsg = objectMapper.readValue(message, StompMessage.class);
+        GameMessage stompMsg = objectMapper.readValue(message, GameMessage.class);
         String timeStamp = new SimpleDateFormat("MM.dd.HH.mm.ss").format(new Date());
         String chat = "[" + timeStamp + "]-" + stompMsg.getBody();
         stompMsg.setBody(chat);
         String returnMessage = objectMapper.writeValueAsString(stompMsg);
-        simpMessagingTemplate.convertAndSend("/topic/chat", returnMessage);
+        //My attempt at a Message Handler Factory
+        String testString = msgFactory.convertToGameMessage(message).processOutboundGameMessage();
+        //
+        simpMessagingTemplate.convertAndSend("/topic/chat", testString);
     } catch (Exception e) {
             System.out.println(e);
         }
@@ -85,3 +77,15 @@ public class ChatController {
         return exception.getMessage();
     }
 }
+    /*
+        From Spring tutorial - It's import to remark that, @SendToUser indicates that the return value of a
+        message-handling method should be
+        sent as a Message to the specified destination(s) prepended with “/user/{username}“ ???
+     */
+    /*
+    @MessageMapping("/chat")
+    @SendTo("/topic/chat")
+    public void broadcastNews(@Payload String message) {
+        this.simpMessagingTemplate.convertAndSend("/topic/party", message);
+    }
+    */
