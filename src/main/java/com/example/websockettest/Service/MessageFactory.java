@@ -3,17 +3,19 @@ package com.example.websockettest.Service;
 import com.example.websockettest.model.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 
 
 public class MessageFactory {
     private String strMessage;
     private GameMessage inMessage;
+    private GameMessage outMessage;
+    private SimpMessageHeaderAccessor sha;
+    private List<String> dest;
+    private String type;
 
-    @Autowired
     ObjectMapper objMapper = new ObjectMapper();
 
     public MessageFactory() {
@@ -22,37 +24,47 @@ public class MessageFactory {
     public MessageFactory convertToGameMessage(String stringMessage){
         try {
             this.inMessage = objMapper.readValue(stringMessage, GameMessage.class);
+            this.dest = inMessage.getDest();
+            this.type = inMessage.getType();
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
         return this;
     }
 
-    public String processOutboundGameMessage(){
-        switch( this.inMessage.getType()){
+    public String processOutboundGameMessage(SimpMessageHeaderAccessor sha){
+        this.sha = sha;
+        this.outMessage = new GameMessage(inMessage);
+        switch( this.type){
             case "party":
+                outMessage.addSystemTime();
+                return convertMessageToString(outMessage);
             case "private":
-                GameMessage chatMsg = addSystemTime( new GameMessage(inMessage)); // = new AbstractMessage((inMessage)).addMessageTime();
-                return convertMessageToString(chatMsg);
+                String sender = sha.getUser().getName();
+                outMessage.addSystemTime(sender);
+                return convertMessageToString(outMessage);
             case "action":
             case "character":
+                return convertMessageToString(outMessage);
             case "map":
             case "lore":
             default: return null;
         }
     }
 
-    public GameMessage addSystemTime(GameMessage msg){
-        String timeStamp = new SimpleDateFormat("MM.dd.HH.mm.ss").format(new Date());
-        String chat = "[" + timeStamp + "]-" + msg.getBody();
-        msg.setBody(chat);
-        return msg;
-    }
-
     public String convertMessageToString(GameMessage msg){
         String strMsg = "";
+        String strObj = "";
         try {
-             strMsg = objMapper.writeValueAsString(msg);
+            if(!this.type.equals("character")) {
+                strMsg = objMapper.writeValueAsString(msg);
+            } else {
+                JsonPojo testObj = new JsonPojo().setTestValues();
+                strObj = objMapper.writeValueAsString(testObj);
+                System.out.println("JsonPojo stringified value: " + strObj);
+                msg.setData(strObj);
+                strMsg = objMapper.writeValueAsString(msg);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -78,4 +90,11 @@ public class MessageFactory {
         this.inMessage = inMessage;
     }
 
+    public List<String> getDest() {
+        return dest;
+    }
+
+    public void setDest(List<String> dest) {
+        this.dest = dest;
+    }
 }

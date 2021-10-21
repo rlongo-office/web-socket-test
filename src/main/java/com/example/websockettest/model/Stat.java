@@ -1,27 +1,27 @@
 package com.example.websockettest.model;
 
 public class Stat {
-    Float raw;      //non adjusted value
-    Float adj;      //adjusted value
+    Double raw;      //non adjusted value
+    Double adj;      //adjusted value
 
-    public Stat(String name, Float raw, Float adj) {
+    public Stat(String name, Double raw, Double adj) {
         this.raw = raw;
         this.adj = adj;
     }
 
-    public Float getRaw() {
+    public Double getRaw() {
         return raw;
     }
 
-    public void setRaw(Float raw) {
+    public void setRaw(Double raw) {
         this.raw = raw;
     }
 
-    public Float getAdj() {
+    public Double getAdj() {
         return adj;
     }
 
-    public void setAdj(Float adj) {
+    public void setAdj(Double adj) {
         this.adj = adj;
     }
 

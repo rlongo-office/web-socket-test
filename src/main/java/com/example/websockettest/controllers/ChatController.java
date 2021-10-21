@@ -32,16 +32,17 @@ public class ChatController {
 
     @MessageMapping("/chat")
     public void processMessageToChat(
-            @Payload String message
+            @Payload String message,
+            SimpMessageHeaderAccessor sha
     ) { try {
-        System.out.println(message);
-        GameMessage stompMsg = objectMapper.readValue(message, GameMessage.class);
-        String timeStamp = new SimpleDateFormat("MM.dd.HH.mm.ss").format(new Date());
-        String chat = "[" + timeStamp + "]-" + stompMsg.getBody();
-        stompMsg.setBody(chat);
-        String returnMessage = objectMapper.writeValueAsString(stompMsg);
+        //System.out.println(message);
+        //GameMessage stompMsg = objectMapper.readValue(message, GameMessage.class);
+        //String timeStamp = new SimpleDateFormat("MM.dd.HH.mm.ss").format(new Date());
+        //String chat = "[" + timeStamp + "]-" + stompMsg.getBody();
+        //stompMsg.setBody(chat);
+        //String returnMessage = objectMapper.writeValueAsString(stompMsg);
         //My attempt at a Message Handler Factory
-        String testString = msgFactory.convertToGameMessage(message).processOutboundGameMessage();
+        String testString = msgFactory.convertToGameMessage(message).processOutboundGameMessage(sha);
         //
         simpMessagingTemplate.convertAndSend("/topic/chat", testString);
     } catch (Exception e) {
@@ -52,13 +53,14 @@ public class ChatController {
     //instead of using SimpMessagingTemplate, we can use @SendTo or @SendToUser to determine destination
     @MessageMapping("/messages")
     public void processMessageFromClient (@Payload String message, SimpMessageHeaderAccessor sha) throws Exception {
-        //ReceiveChatMessage response = new ReceiveChatMessage();
-        //take message string and put in object?
-        String user = sha.getUser().getName();
-        System.out.println(user);
-        String timeStamp = new SimpleDateFormat("MM.dd.HH.mm.ss").format(new Date());
-        String sendMsg = "[" + timeStamp + "]-" + "From " + user + ":" + message;
-        simpMessagingTemplate.convertAndSendToUser(sha.getUser().getName(), "/queue/message", sendMsg);
+        //String user = sha.getUser().getName();
+        //System.out.println(user);
+        //String timeStamp = new SimpleDateFormat("MM.dd.HH.mm.ss").format(new Date());
+        //String sendMsg = "[" + timeStamp + "]-" + "From " + user + ":" + message;
+        String testString = msgFactory.convertToGameMessage(message).processOutboundGameMessage(sha);
+        for (String sender: msgFactory.getDest()){
+            simpMessagingTemplate.convertAndSendToUser(sender, "/queue/message", testString);
+        }
         // return "This is a user message";
     }
 

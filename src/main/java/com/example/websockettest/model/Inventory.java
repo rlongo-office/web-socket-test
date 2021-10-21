@@ -2,14 +2,16 @@ package com.example.websockettest.model;
 
 public class Inventory {
     String name;
-    Float quantity;
-    Float weight;
-    Float cost;
+    Double quantity;
+    Double weight;
+    Double cost;
     String gearType;
     String description;
 
-    public Inventory(String name, Float quantity, Float weight,
-                     Float cost, String gearType, String description) {
+    public Inventory() {
+    }
+
+    public Inventory(String name, Double quantity, Double weight, Double cost, String gearType, String description) {
         this.name = name;
         this.quantity = quantity;
         this.weight = weight;
@@ -26,27 +28,27 @@ public class Inventory {
         this.name = name;
     }
 
-    public Float getQuantity() {
+    public Double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Float quantity) {
+    public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
 
-    public Float getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(Float weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public Float getCost() {
+    public Double getCost() {
         return cost;
     }
 
-    public void setCost(Float cost) {
+    public void setCost(Double cost) {
         this.cost = cost;
     }
 

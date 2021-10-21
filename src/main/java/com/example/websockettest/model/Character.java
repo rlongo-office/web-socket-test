@@ -3,6 +3,7 @@ package com.example.websockettest.model;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 
 
 public class Character {
@@ -20,23 +21,24 @@ public class Character {
     Stat weight;
     String alignment;
     Stat size;
-    String[] diety;
-    ArrayList<Stat> race;
+    ArrayList<String> diety;
+    Map<String,Double> race;
     Integer reach;
     Stat experience;
-    String[] auras;
-    String[] senses;
+    ArrayList<LearningClass> classes;
+    ArrayList<Attribute> auras;
+    ArrayList<Attribute> senses;
     Stat hitpoint;
     Integer damage;
     Purse purse;
-    String[] languages;
-    String[] toolProfs;
-    String[] weaponProfs;
-    String[] armorProfs;
+    ArrayList<Attribute> languages;
+    ArrayList<Attribute> toolProfs;
+    ArrayList<Attribute> weaponProfs;
+    ArrayList<Attribute> armorProfs;
     ArrayList<Attribute> abilities;
     ArrayList<Attribute> abilityMods;
     ArrayList<Skill> skills;
-    String[] allSaves;
+    ArrayList<Attribute> allSaves;
     Stat armorClass;
     Stat initiative;
     Stat speed;
@@ -45,14 +47,17 @@ public class Character {
     ArrayList<Inventory> inventories;
     ArrayList<Spell> spells;
 
+    public Character() {
+    }
 
     public Character(Boolean active, String backStory, String role, String name, User player, String gender,
                      Stat age, String hair, String eyes, String skin, Stat height, Stat weight, String alignment,
-                     Stat size, String[] diety, ArrayList<Stat> race, Integer reach, Stat experience, String[] auras,
-                     String[] senses, Stat hitpoint, Integer damage, Purse purse, String[] languages,
-                     String[] toolProfs, String[] weaponProfs, String[] armorProfs, ArrayList<Attribute> abilities,
-                     ArrayList<Attribute> abilityMods, ArrayList<Skill> skills, String[] allSaves, Stat armorClass,
-                     Stat initiative, Stat speed, Stat encumbrance, Float carriedWeight,
+                     Stat size, ArrayList<String> diety, Map<String, Double> race, Integer reach, Stat experience,
+                     ArrayList<Attribute> auras, ArrayList<Attribute> senses, Stat hitpoint, Integer damage,
+                     Purse purse, ArrayList<Attribute> languages, ArrayList<Attribute> toolProfs,
+                     ArrayList<Attribute> weaponProfs, ArrayList<Attribute> armorProfs, ArrayList<Attribute> abilities,
+                     ArrayList<Attribute> abilityMods, ArrayList<Skill> skills, ArrayList<Attribute> allSaves,
+                     Stat armorClass, Stat initiative, Stat speed, Stat encumbrance, Float carriedWeight,
                      ArrayList<Inventory> inventories, ArrayList<Spell> spells) {
         this.active = active;
         this.backStory = backStory;
@@ -206,19 +211,19 @@ public class Character {
         this.size = size;
     }
 
-    public String[] getDiety() {
+    public ArrayList<String> getDiety() {
         return diety;
     }
 
-    public void setDiety(String[] diety) {
+    public void setDiety(ArrayList<String> diety) {
         this.diety = diety;
     }
 
-    public ArrayList<Stat> getRace() {
+    public Map<String, Double> getRace() {
         return race;
     }
 
-    public void setRace(ArrayList<Stat> race) {
+    public void setRace(Map<String, Double> race) {
         this.race = race;
     }
 
@@ -238,19 +243,19 @@ public class Character {
         this.experience = experience;
     }
 
-    public String[] getAuras() {
+    public ArrayList<Attribute> getAuras() {
         return auras;
     }
 
-    public void setAuras(String[] auras) {
+    public void setAuras(ArrayList<Attribute> auras) {
         this.auras = auras;
     }
 
-    public String[] getSenses() {
+    public ArrayList<Attribute> getSenses() {
         return senses;
     }
 
-    public void setSenses(String[] senses) {
+    public void setSenses(ArrayList<Attribute> senses) {
         this.senses = senses;
     }
 
@@ -278,35 +283,35 @@ public class Character {
         this.purse = purse;
     }
 
-    public String[] getLanguages() {
+    public ArrayList<Attribute> getLanguages() {
         return languages;
     }
 
-    public void setLanguages(String[] languages) {
+    public void setLanguages(ArrayList<Attribute> languages) {
         this.languages = languages;
     }
 
-    public String[] getToolProfs() {
+    public ArrayList<Attribute> getToolProfs() {
         return toolProfs;
     }
 
-    public void setToolProfs(String[] toolProfs) {
+    public void setToolProfs(ArrayList<Attribute> toolProfs) {
         this.toolProfs = toolProfs;
     }
 
-    public String[] getWeaponProfs() {
+    public ArrayList<Attribute> getWeaponProfs() {
         return weaponProfs;
     }
 
-    public void setWeaponProfs(String[] weaponProfs) {
+    public void setWeaponProfs(ArrayList<Attribute> weaponProfs) {
         this.weaponProfs = weaponProfs;
     }
 
-    public String[] getArmorProfs() {
+    public ArrayList<Attribute> getArmorProfs() {
         return armorProfs;
     }
 
-    public void setArmorProfs(String[] armorProfs) {
+    public void setArmorProfs(ArrayList<Attribute> armorProfs) {
         this.armorProfs = armorProfs;
     }
 
@@ -334,11 +339,11 @@ public class Character {
         this.skills = skills;
     }
 
-    public String[] getAllSaves() {
+    public ArrayList<Attribute> getAllSaves() {
         return allSaves;
     }
 
-    public void setAllSaves(String[] allSaves) {
+    public void setAllSaves(ArrayList<Attribute> allSaves) {
         this.allSaves = allSaves;
     }
 
@@ -398,6 +403,14 @@ public class Character {
         this.spells = spells;
     }
 
+    public ArrayList<LearningClass> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(ArrayList<LearningClass> classes) {
+        this.classes = classes;
+    }
+
     @Override
     public String toString() {
         return "Character{" +
@@ -415,23 +428,24 @@ public class Character {
                 ", weight=" + weight +
                 ", alignment='" + alignment + '\'' +
                 ", size=" + size +
-                ", diety=" + Arrays.toString(diety) +
+                ", diety=" + diety +
                 ", race=" + race +
                 ", reach=" + reach +
                 ", experience=" + experience +
-                ", auras=" + Arrays.toString(auras) +
-                ", senses=" + Arrays.toString(senses) +
+                ", classes=" + classes +
+                ", auras=" + auras +
+                ", senses=" + senses +
                 ", hitpoint=" + hitpoint +
                 ", damage=" + damage +
                 ", purse=" + purse +
-                ", languages=" + Arrays.toString(languages) +
-                ", toolProfs=" + Arrays.toString(toolProfs) +
-                ", weaponProfs=" + Arrays.toString(weaponProfs) +
-                ", armorProfs=" + Arrays.toString(armorProfs) +
+                ", languages=" + languages +
+                ", toolProfs=" + toolProfs +
+                ", weaponProfs=" + weaponProfs +
+                ", armorProfs=" + armorProfs +
                 ", abilities=" + abilities +
                 ", abilityMods=" + abilityMods +
                 ", skills=" + skills +
-                ", allSaves=" + Arrays.toString(allSaves) +
+                ", allSaves=" + allSaves +
                 ", armorClass=" + armorClass +
                 ", initiative=" + initiative +
                 ", speed=" + speed +

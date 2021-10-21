@@ -1,6 +1,7 @@
 package com.example.websockettest.model;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Spell {
      String name;
@@ -8,16 +9,16 @@ public class Spell {
      Float range;
      Integer dc;
      Integer casterLevel;
-     String[] components;
-     String[] schools;
+     List<String> components;
+     List<String> schools;
      Integer castsLeft;
      Boolean unlimited;
      String description;
-     String[] traits;
+     List<String> traits;
 
-    public Spell(String name, String castTime, Float range, Integer dc,
-                 Integer casterLevel, String[] components, String[] schools,
-                 Integer castsLeft, Boolean unlimited, String description, String[] traits) {
+     public Spell(){}
+
+    public Spell(String name, String castTime, Float range, Integer dc, Integer casterLevel, List<String> components, List<String> schools, Integer castsLeft, Boolean unlimited, String description, List<String> traits) {
         this.name = name;
         this.castTime = castTime;
         this.range = range;
@@ -71,19 +72,19 @@ public class Spell {
         this.casterLevel = casterLevel;
     }
 
-    public String[] getComponents() {
+    public List<String> getComponents() {
         return components;
     }
 
-    public void setComponents(String[] components) {
+    public void setComponents(List<String> components) {
         this.components = components;
     }
 
-    public String[] getSchools() {
+    public List<String> getSchools() {
         return schools;
     }
 
-    public void setSchools(String[] schools) {
+    public void setSchools(List<String> schools) {
         this.schools = schools;
     }
 
@@ -111,11 +112,11 @@ public class Spell {
         this.description = description;
     }
 
-    public String[] getTraits() {
+    public List<String> getTraits() {
         return traits;
     }
 
-    public void setTraits(String[] traits) {
+    public void setTraits(List<String> traits) {
         this.traits = traits;
     }
 
@@ -127,13 +128,12 @@ public class Spell {
                 ", range=" + range +
                 ", dc=" + dc +
                 ", casterLevel=" + casterLevel +
-                ", components=" + Arrays.toString(components) +
-                ", schools=" + Arrays.toString(schools) +
+                ", components=" + components +
+                ", schools=" + schools +
                 ", castsLeft=" + castsLeft +
                 ", unlimited=" + unlimited +
                 ", description='" + description + '\'' +
-                ", traits=" + Arrays.toString(traits) +
+                ", traits=" + traits +
                 '}';
     }
-
 }
