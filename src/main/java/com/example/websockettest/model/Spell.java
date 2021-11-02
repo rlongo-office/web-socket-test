@@ -5,9 +5,12 @@ import java.util.List;
 
 public class Spell {
      String name;
+     String type;
+     Integer level;
      String castTime;
-     Float range;
-     Integer dc;
+     Double range;
+     String duration;
+     Double dc;
      Integer casterLevel;
      List<String> components;
      List<String> schools;
@@ -18,19 +21,22 @@ public class Spell {
 
      public Spell(){}
 
-    public Spell(String name, String castTime, Float range, Integer dc, Integer casterLevel, List<String> components, List<String> schools, Integer castsLeft, Boolean unlimited, String description, List<String> traits) {
-        this.name = name;
-        this.castTime = castTime;
-        this.range = range;
-        this.dc = dc;
-        this.casterLevel = casterLevel;
-        this.components = components;
-        this.schools = schools;
-        this.castsLeft = castsLeft;
-        this.unlimited = unlimited;
-        this.description = description;
-        this.traits = traits;
-    }
+        public Spell(String name, String type, Integer level, String castTime, Double range, String duration, Double dc, Integer casterLevel, List<String> components, List<String> schools, Integer castsLeft, Boolean unlimited, String description, List<String> traits) {
+            this.name = name;
+            this.type = type;
+            this.level = level;
+            this.castTime = castTime;
+            this.range = range;
+            this.duration = duration;
+            this.dc = dc;
+            this.casterLevel = casterLevel;
+            this.components = components;
+            this.schools = schools;
+            this.castsLeft = castsLeft;
+            this.unlimited = unlimited;
+            this.description = description;
+            this.traits = traits;
+        }
 
     public String getName() {
         return name;
@@ -38,6 +44,22 @@ public class Spell {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public String getCastTime() {
@@ -48,19 +70,27 @@ public class Spell {
         this.castTime = castTime;
     }
 
-    public Float getRange() {
+    public Double getRange() {
         return range;
     }
 
-    public void setRange(Float range) {
+    public void setRange(Double range) {
         this.range = range;
     }
 
-    public Integer getDc() {
+    public String getDuration() {
+        return duration;
+    }
+
+    public void setDuration(String duration) {
+        this.duration = duration;
+    }
+
+    public Double getDc() {
         return dc;
     }
 
-    public void setDc(Integer dc) {
+    public void setDc(Double dc) {
         this.dc = dc;
     }
 
@@ -124,8 +154,11 @@ public class Spell {
     public String toString() {
         return "Spell{" +
                 "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", level=" + level +
                 ", castTime='" + castTime + '\'' +
                 ", range=" + range +
+                ", duration='" + duration + '\'' +
                 ", dc=" + dc +
                 ", casterLevel=" + casterLevel +
                 ", components=" + components +

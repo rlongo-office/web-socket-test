@@ -57,6 +57,7 @@ public class ChatController {
         //System.out.println(user);
         //String timeStamp = new SimpleDateFormat("MM.dd.HH.mm.ss").format(new Date());
         //String sendMsg = "[" + timeStamp + "]-" + "From " + user + ":" + message;
+
         String testString = msgFactory.convertToGameMessage(message).processOutboundGameMessage(sha);
         for (String sender: msgFactory.getDest()){
             simpMessagingTemplate.convertAndSendToUser(sender, "/queue/message", testString);

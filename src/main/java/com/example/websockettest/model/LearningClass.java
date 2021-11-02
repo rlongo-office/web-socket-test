@@ -6,10 +6,13 @@ public class LearningClass {
     String spells;
     Integer castLevel;
     Integer spellAttack;
-    Integer SpellSave;
+    Integer spellSave;
     String castSource;
     String spellAbility;
     String classHitDice;
+
+    public LearningClass() {
+    }
 
     public LearningClass(Integer level, String name, String spells, Integer castLevel, Integer spellAttack, Integer spellSave, String castSource, String spellAbility, String classHitDice) {
         this.level = level;
@@ -17,7 +20,7 @@ public class LearningClass {
         this.spells = spells;
         this.castLevel = castLevel;
         this.spellAttack = spellAttack;
-        SpellSave = spellSave;
+        this.spellSave = spellSave;
         this.castSource = castSource;
         this.spellAbility = spellAbility;
         this.classHitDice = classHitDice;
@@ -64,11 +67,11 @@ public class LearningClass {
     }
 
     public Integer getSpellSave() {
-        return SpellSave;
+        return spellSave;
     }
 
     public void setSpellSave(Integer spellSave) {
-        SpellSave = spellSave;
+        spellSave = spellSave;
     }
 
     public String getCastSource() {
@@ -103,7 +106,7 @@ public class LearningClass {
                 ", spells='" + spells + '\'' +
                 ", castLevel=" + castLevel +
                 ", spellAttack=" + spellAttack +
-                ", SpellSave=" + SpellSave +
+                ", SpellSave=" + spellSave +
                 ", castSource='" + castSource + '\'' +
                 ", spellAbility='" + spellAbility + '\'' +
                 ", classHitDice='" + classHitDice + '\'' +

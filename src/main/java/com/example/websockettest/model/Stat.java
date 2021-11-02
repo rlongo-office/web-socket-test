@@ -4,7 +4,10 @@ public class Stat {
     Double raw;      //non adjusted value
     Double adj;      //adjusted value
 
-    public Stat(String name, Double raw, Double adj) {
+    public Stat() {
+    }
+
+    public Stat(Double raw, Double adj) {
         this.raw = raw;
         this.adj = adj;
     }

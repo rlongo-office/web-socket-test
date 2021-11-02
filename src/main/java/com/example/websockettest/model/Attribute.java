@@ -5,6 +5,9 @@ public class Attribute {
     String type;
     Stat stat;
 
+    public Attribute() {
+    }
+
     public Attribute(String name, String type, Stat stat) {
         this.name = name;
         this.type = type;

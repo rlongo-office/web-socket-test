@@ -43,22 +43,16 @@ public class Character {
     Stat initiative;
     Stat speed;
     Stat encumbrance;
-    Float carriedWeight;
+    Stat carriedWeight;
     ArrayList<Inventory> inventories;
     ArrayList<Spell> spells;
+    ArrayList<Special> specials;
+    ArrayList<Weapon> weapons;
 
     public Character() {
     }
 
-    public Character(Boolean active, String backStory, String role, String name, User player, String gender,
-                     Stat age, String hair, String eyes, String skin, Stat height, Stat weight, String alignment,
-                     Stat size, ArrayList<String> diety, Map<String, Double> race, Integer reach, Stat experience,
-                     ArrayList<Attribute> auras, ArrayList<Attribute> senses, Stat hitpoint, Integer damage,
-                     Purse purse, ArrayList<Attribute> languages, ArrayList<Attribute> toolProfs,
-                     ArrayList<Attribute> weaponProfs, ArrayList<Attribute> armorProfs, ArrayList<Attribute> abilities,
-                     ArrayList<Attribute> abilityMods, ArrayList<Skill> skills, ArrayList<Attribute> allSaves,
-                     Stat armorClass, Stat initiative, Stat speed, Stat encumbrance, Float carriedWeight,
-                     ArrayList<Inventory> inventories, ArrayList<Spell> spells) {
+    public Character(Boolean active, String backStory, String role, String name, User player, String gender, Stat age, String hair, String eyes, String skin, Stat height, Stat weight, String alignment, Stat size, ArrayList<String> diety, Map<String, Double> race, Integer reach, Stat experience, ArrayList<LearningClass> classes, ArrayList<Attribute> auras, ArrayList<Attribute> senses, Stat hitpoint, Integer damage, Purse purse, ArrayList<Attribute> languages, ArrayList<Attribute> toolProfs, ArrayList<Attribute> weaponProfs, ArrayList<Attribute> armorProfs, ArrayList<Attribute> abilities, ArrayList<Attribute> abilityMods, ArrayList<Skill> skills, ArrayList<Attribute> allSaves, Stat armorClass, Stat initiative, Stat speed, Stat encumbrance, Stat carriedWeight, ArrayList<Inventory> inventories, ArrayList<Spell> spells, ArrayList<Special> specials, ArrayList<Weapon> weapons) {
         this.active = active;
         this.backStory = backStory;
         this.role = role;
@@ -77,6 +71,7 @@ public class Character {
         this.race = race;
         this.reach = reach;
         this.experience = experience;
+        this.classes = classes;
         this.auras = auras;
         this.senses = senses;
         this.hitpoint = hitpoint;
@@ -97,6 +92,8 @@ public class Character {
         this.carriedWeight = carriedWeight;
         this.inventories = inventories;
         this.spells = spells;
+        this.specials = specials;
+        this.weapons = weapons;
     }
 
     public Boolean getActive() {
@@ -379,11 +376,11 @@ public class Character {
         this.encumbrance = encumbrance;
     }
 
-    public Float getCarriedWeight() {
+    public Stat getCarriedWeight() {
         return carriedWeight;
     }
 
-    public void setCarriedWeight(Float carriedWeight) {
+    public void setCarriedWeight(Stat carriedWeight) {
         this.carriedWeight = carriedWeight;
     }
 
@@ -410,6 +407,18 @@ public class Character {
     public void setClasses(ArrayList<LearningClass> classes) {
         this.classes = classes;
     }
+
+    public ArrayList<Special> getSpecials() {
+        return specials;
+    }
+
+    public void setSpecials(ArrayList<Special> specials) {
+        this.specials = specials;
+    }
+
+    public ArrayList<Weapon> getWeapons() { return weapons; }
+
+    public void setWeapons(ArrayList<Weapon> weapons) { this.weapons = weapons;}
 
     @Override
     public String toString() {
@@ -453,6 +462,8 @@ public class Character {
                 ", carriedWeight=" + carriedWeight +
                 ", inventories=" + inventories +
                 ", spells=" + spells +
+                ", specials=" + specials +
+                ", weapons=" + weapons +
                 '}';
     }
 }

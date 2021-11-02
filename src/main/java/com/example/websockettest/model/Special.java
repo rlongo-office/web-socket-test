@@ -1,18 +1,17 @@
 package com.example.websockettest.model;
 
-public class Skill {
+public class Special {
     String name;
-    Stat stat;
-    Double passive;
+    String type;
+    String source;
     String description;
 
-    public Skill() {
-    }
+    public Special() {}
 
-    public Skill(String name, Stat stat, Double passive, String description) {
+    public Special(String name, String type, String source, String description) {
         this.name = name;
-        this.stat = stat;
-        this.passive = passive;
+        this.type = type;
+        this.source = source;
         this.description = description;
     }
 
@@ -24,20 +23,20 @@ public class Skill {
         this.name = name;
     }
 
-    public Stat getStat() {
-        return stat;
+    public String getType() {
+        return type;
     }
 
-    public void setStat(Stat stat) {
-        this.stat = stat;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Double getPassive() {
-        return passive;
+    public String getSource() {
+        return source;
     }
 
-    public void setPassive(Double passive) {
-        this.passive = passive;
+    public void setSource(String source) {
+        this.source = source;
     }
 
     public String getDescription() {
@@ -50,10 +49,10 @@ public class Skill {
 
     @Override
     public String toString() {
-        return "Skill{" +
+        return "Special{" +
                 "name='" + name + '\'' +
-                ", stat=" + stat +
-                ", passive=" + passive +
+                ", type='" + type + '\'' +
+                ", source='" + source + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

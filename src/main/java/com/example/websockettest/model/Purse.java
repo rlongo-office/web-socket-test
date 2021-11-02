@@ -7,6 +7,9 @@ public class Purse {
     Integer silver;
     Integer copper;
 
+    public Purse() {
+    }
+
     public Purse(Integer platinum, Integer gold, Integer electrum, Integer silver, Integer copper) {
         this.platinum = platinum;
         this.gold = gold;

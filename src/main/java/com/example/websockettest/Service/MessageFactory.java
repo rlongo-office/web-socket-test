@@ -1,10 +1,15 @@
 package com.example.websockettest.Service;
 
 import com.example.websockettest.model.*;
+import com.example.websockettest.model.Character;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.io.FileUtils;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 
 
@@ -32,7 +37,7 @@ public class MessageFactory {
         return this;
     }
 
-    public String processOutboundGameMessage(SimpMessageHeaderAccessor sha){
+    public String processOutboundGameMessage(SimpMessageHeaderAccessor sha) throws IOException {
         this.sha = sha;
         this.outMessage = new GameMessage(inMessage);
         switch( this.type){
@@ -46,10 +51,20 @@ public class MessageFactory {
             case "action":
             case "character":
                 return convertMessageToString(outMessage);
-            case "map":
+            case "image":
+                return convertImagesToString(outMessage);
             case "lore":
             default: return null;
         }
+    }
+
+    private String convertImagesToString(GameMessage msg) throws IOException {
+        File mapFile = new File("C:\\development\\maps\\testwebmap.jpg");
+        byte[] fileContent = FileUtils.readFileToByteArray(mapFile);
+        String encodedString = Base64.getEncoder().encodeToString(fileContent);
+        msg.setData(encodedString);
+        String strMsg = objMapper.writeValueAsString(msg);
+        return strMsg;
     }
 
     public String convertMessageToString(GameMessage msg){
@@ -57,11 +72,11 @@ public class MessageFactory {
         String strObj = "";
         try {
             if(!this.type.equals("character")) {
+
                 strMsg = objMapper.writeValueAsString(msg);
             } else {
-                JsonPojo testObj = new JsonPojo().setTestValues();
-                strObj = objMapper.writeValueAsString(testObj);
-                System.out.println("JsonPojo stringified value: " + strObj);
+                Character charObj = objMapper.readValue(new File("C:\\projects\\rpg-ui\\src\\data\\rollo.json"), Character.class);
+                strObj = objMapper.writeValueAsString(charObj);
                 msg.setData(strObj);
                 strMsg = objMapper.writeValueAsString(msg);
             }
