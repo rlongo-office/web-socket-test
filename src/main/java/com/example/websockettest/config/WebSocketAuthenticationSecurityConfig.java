@@ -23,7 +23,7 @@ public class WebSocketAuthenticationSecurityConfig implements WebSocketMessageBr
 
     @Override
     public void configureClientInboundChannel(final ChannelRegistration registration) {
-        registration.setInterceptors(authChannelInterceptorAdapter);
+        registration.interceptors(authChannelInterceptorAdapter);
     }
 
 }
