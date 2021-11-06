@@ -78,6 +78,11 @@
             <artifactId>web-socket-test</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.sonatype.sisu</groupId>
+            <artifactId>sisu-inject-bean</artifactId>
+            <version>2.1.1</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -27,10 +27,4 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/game-app").setAllowedOriginPatterns("*").withSockJS();
         //registry.addEndpoint("/chat-app").withSockJS();
     }
-
-    @Override
-    public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.interceptors(new UserInterceptor());
-    }
-
 }
